@@ -1,0 +1,88 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript">
+  
+</script>
+</head>
+<body>
+  <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="myDiv1"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="myDiv2"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="myDiv3"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+    $.get("http://localhost:5000/api/v1/csv?fileName=NIFTY.csv", function(data, status){
+      let x = [];
+      let y = [];
+      let z = [];
+      for( var i = 0; i < data.rows.length; i++){
+        x.push(data.rows[i].Time);
+        y.push(data.rows[i].PutSumOI);
+        z.push(data.rows[i].CallSumOI);
+      }
+      var trace = {
+        x: x,
+        y: y,
+        mode: 'lines',
+        line: {
+          color: 'rgb(55, 128, 191)',
+          width: 3
+        }
+      };
+
+      var trace1 = {
+        x: x,
+        y: z,
+        mode: 'lines',
+        line: {
+          color: 'rgb(100, 200, 200)',
+          width: 3
+        }
+      };
+
+      var data = [ trace, trace1 ];
+
+      var layout = {};
+
+      Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
+  });
+
+  $.get("http://localhost:5000/api/v1/csv?fileName=BANIFTY.csv", function(data, status){
+      let x = [];
+      let y = [];
+      let z = [];
+      for( var i = 0; i < data.rows.length; i++){
+        x.push(data.rows[i].Time);
+        y.push(data.rows[i].PutSumOI);
+        z.push(data.rows[i].CallSumOI);
+      }
+      var trace = {
+        x: x,
+        y: y,
+        mode: 'lines',
+        line: {
+          color: 'rgb(55, 128, 191)',
+          width: 3
+        }
+      };
+
+      var trace1 = {
+        x: x,
+        y: z,
+        mode: 'lines',
+        line: {
+          color: 'rgb(100, 200, 200)',
+          width: 3
+        }
+      };
+
+      var data = [ trace, trace1 ];
+
+      var layout = {};
+
+      Plotly.newPlot('myDiv1', data, layout, {showSendToCloud: true});
+  });
+  </script>
+</body>
+</html>
